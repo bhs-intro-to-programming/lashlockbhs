@@ -119,6 +119,7 @@ const createShape = () =>{
     drawFilledCircle(ObjArray[ObjArray.length - 1].centerX, ObjArray[ObjArray.length - 1].centerY, 2.5, "red")
     CoordsArray = []
   })
+  break
 }
 
 class Shape {
