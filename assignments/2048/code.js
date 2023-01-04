@@ -4,7 +4,7 @@ const detectSelfIntersection = (shape) => {
   shape.getBoundOfObject
 }
 
-drawFilledRect(0,0,width,height, 'black')
+drawFilledRect(0, 0, width, height, 'black')
 
 const collisions = (shapes) => {
   const collisionPoints = []
@@ -31,42 +31,42 @@ const collisions = (shapes) => {
   return collisionPoints;
 }
 
-const getBoundCenter = (arr) =>{
+const getBoundCenter = (arr) => {
   const sigma = (start, end, funct) => {
-  let sum = 0
-  for (let n = start; n <= end; n++) {
-    sum += funct(n)
+    let sum = 0
+    for (let n = start; n <= end; n++) {
+      sum += funct(n)
+    }
+    return sum
   }
-  return sum
+  const findCentroid = (points) => {
+    const pts = points.concat(points[0])
+    const area = (sigma(0, pts.length - 2, i => (pts[i].x * pts[i + 1].y) - (pts[i + 1].x * pts[i].y))) / 2
+    const x = (sigma(0, pts.length - 2, i => (pts[i].x + pts[i + 1].x) * ((pts[i].x * pts[i + 1].y) - (pts[i + 1].x * pts[i].y)))) / (6 * area)
+    const y = (sigma(0, pts.length - 2, i => (pts[i].y + pts[i + 1].y) * ((pts[i].x * pts[i + 1].y) - (pts[i + 1].x * pts[i].y)))) / (6 * area)
+    return ({ x, y })
   }
-const findCentroid = (points) => {
-  const pts = points.concat(points[0])
-  const area = (sigma(0, pts.length - 2, i => (pts[i].x * pts[i + 1].y) - (pts[i + 1].x * pts[i].y))) / 2
-  const x = (sigma(0, pts.length - 2, i => (pts[i].x + pts[i + 1].x) * ((pts[i].x * pts[i + 1].y) - (pts[i + 1].x * pts[i].y)))) / (6 * area)
-  const y = (sigma(0, pts.length - 2, i => (pts[i].y + pts[i + 1].y) * ((pts[i].x * pts[i + 1].y) - (pts[i + 1].x * pts[i].y)))) / (6 * area)
-  return ({x, y})
-}
-const returner = findCentroid(arr)
-return returner
- /* let xMinMax = {min: arr[0].x, max: arr[0].x}
-  let yMinMax =  {min: arr[0].y, max: arr[0].y}
-  for (const e of arr){
-    if (e.x < xMinMax.min) xMinMax.min = e.x
-    if (e.x > xMinMax.max) xMinMax.max = e.x
-    if (e.y < yMinMax.min) yMinMax.min = e.y
-    if (e.y > yMinMax.max) yMinMax.max = e.y
-  }*/
+  const returner = findCentroid(arr)
+  return returner
+  /* let xMinMax = {min: arr[0].x, max: arr[0].x}
+   let yMinMax =  {min: arr[0].y, max: arr[0].y}
+   for (const e of arr){
+     if (e.x < xMinMax.min) xMinMax.min = e.x
+     if (e.x > xMinMax.max) xMinMax.max = e.x
+     if (e.y < yMinMax.min) yMinMax.min = e.y
+     if (e.y > yMinMax.max) yMinMax.max = e.y
+   }*/
 
   //return {x: (xMinMax.min + xMinMax.max)/2 , y: (yMinMax.min + yMinMax.max)/2 }
 }
 
 const rotate = (cx, cy, x, y, angle) => {
-    let radians = (Math.PI / 180) * angle,
-     cos = Math.cos(radians),
-        sin = Math.sin(radians),
-        nx = (cos * (x - cx)) + (sin * (y - cy)) + cx,
-        ny = (cos * (y - cy)) - (sin * (x - cx)) + cy;
-    return [nx, ny];
+  let radians = (Math.PI / 180) * angle,
+    cos = Math.cos(radians),
+    sin = Math.sin(radians),
+    nx = (cos * (x - cx)) + (sin * (y - cy)) + cx,
+    ny = (cos * (y - cy)) - (sin * (x - cx)) + cy;
+  return [nx, ny];
 }
 
 //vector manipulation
@@ -91,7 +91,7 @@ const vectorMultiply = (o, n) => {
     return ({ angle: o.angle + Math.PI, magnitude: o.magnitude * -n })
   }
 }
-    
+
 const addNumVectors = (a, mode) => {
   if (mode === 'degrees') {
     const r = a.reduce((acc, x) => add2Vectors([acc, x]), vector(0, 0))
@@ -107,25 +107,25 @@ const ObjArray = []
 let CoordsArray = []
 
 
-registerOnclick((x,y) =>{
-drawFilledCircle(x,y,1.7,'white')
-CoordsArray.push({x, y})
+registerOnclick((x, y) => {
+  drawFilledCircle(x, y, 1.7, 'white')
+  CoordsArray.push({ x, y })
 })
 
 
 class Shape {
- constructor(mass, actingForces, coordArray){
-   this.startingX = coordArray[0].x
-   this.startingY = coordArray[0].y
-   this.sides = createSides(coordArray)
-   this.vertices = coordArray
-   this.mass = mass
-   this.centerX = getBoundCenter(coordArray).x
-   this.centerY = getBoundCenter(coordArray).y
-   this.rotation = 0
-   this.actingForce = [addNumVectors(actingForces)]
- }
- drawShape() {
+  constructor(mass, actingForces, coordArray) {
+    this.startingX = coordArray[0].x
+    this.startingY = coordArray[0].y
+    this.sides = createSides(coordArray)
+    this.vertices = coordArray
+    this.mass = mass
+    this.centerX = getBoundCenter(coordArray).x
+    this.centerY = getBoundCenter(coordArray).y
+    this.rotation = 0
+    this.actingForce = [addNumVectors(actingForces)]
+  }
+  drawShape() {
     let currX = this.startingX;
     let currY = this.startingY;
 
@@ -144,17 +144,17 @@ class Shape {
     for (let i = 0; i < this.sides.length; i++) {
       let coordSetStart = rotate(this.centerX, this.centerY, currX, currY, this.rotation)
       let coordSetEnd = rotate(this.centerX, this.centerY, currX + this.sides[i].xAdd, currY + this.sides[i].yAdd, this.rotation);
-      let numOfSidePixels = Math.round(Math.sqrt(((coordSetStart[0]-coordSetEnd[0]) ** 2) + ((coordSetStart[1]-coordSetEnd[1]) ** 2)));
+      let numOfSidePixels = Math.round(Math.sqrt(((coordSetStart[0] - coordSetEnd[0]) ** 2) + ((coordSetStart[1] - coordSetEnd[1]) ** 2)));
 
       drawLine(coordSetStart[0], coordSetStart[1], coordSetEnd[0], coordSetEnd[1])
-      
-      let xAddPerPix = (coordSetEnd[0] - coordSetStart[0])/numOfSidePixels
-      let yAddPerPix = (coordSetEnd[1] - coordSetStart[1])/numOfSidePixels
 
-      for(let n = 0; n<numOfSidePixels; n++){
-        array.push({"x" : coordSetStart[0] + n*xAddPerPix, "y" : coordSetStart[1] + n*yAddPerPix})
+      let xAddPerPix = (coordSetEnd[0] - coordSetStart[0]) / numOfSidePixels
+      let yAddPerPix = (coordSetEnd[1] - coordSetStart[1]) / numOfSidePixels
+
+      for (let n = 0; n < numOfSidePixels; n++) {
+        array.push({ "x": coordSetStart[0] + n * xAddPerPix, "y": coordSetStart[1] + n * yAddPerPix })
       }
-      
+
       currX = currX + this.sides[i].xAdd;
       currY = currY + this.sides[i].yAdd;
     }
@@ -163,36 +163,37 @@ class Shape {
 }
 
 
-const createSides = (array) =>{
+const createSides = (array) => {
   const returnArray = []
-  for (let v = 0; v<array.length-1; v++){
-    returnArray.push({xAdd: array[v+1].x - array[v].x, yAdd: array[v+1].y - array[v].y})
+  for (let v = 0; v < array.length - 1; v++) {
+    returnArray.push({ xAdd: array[v + 1].x - array[v].x, yAdd: array[v + 1].y - array[v].y })
   }
-  returnArray.push({xAdd: array[0].x - array[array.length-1].x, yAdd: array[0].y - array[array.length-1].y})
+  returnArray.push({ xAdd: array[0].x - array[array.length - 1].x, yAdd: array[0].y - array[array.length - 1].y })
   return returnArray
 }
-registerOnKeyDown((Space)=>{
-  ObjArray.push(new Shape(10, [vector(0,0)], CoordsArray))
-  ObjArray[ObjArray.length-1].drawShape()
-  drawFilledCircle (ObjArray[ObjArray.length-1].centerX,ObjArray[ObjArray.length-1].centerY, 2.5, "red")
+
+registerOnKeyDown((Space) => {
+  ObjArray.push(new Shape(10, [vector(0, 0)], CoordsArray))
+  ObjArray[ObjArray.length - 1].drawShape()
+  drawFilledCircle(ObjArray[ObjArray.length - 1].centerX, ObjArray[ObjArray.length - 1].centerY, 2.5, "red")
   CoordsArray = []
 })
 
 // draw on canvas and make changes to shapes
 const drawFrame = (time) => {
   if (time > next) {
-    
-    clear();
-    for (const element of ObjArray){
-    addGravity(element, ObjArray)
-    addNumVectors(element.actingForce)
-    const objectBound = element.getBoundOfObject();
-    console.log(objectBound);
 
-    element.drawShape();
-    element.rotation = countFrame*1;
-    next += 10;
-    countFrame++;
-  }}
+    clear();
+    for (const element of ObjArray) {
+      addGravity(element, ObjArray)
+      addNumVectors(element.actingForce)
+      const objectBound = element.getBoundOfObject();
+
+      element.drawShape();
+      element.rotation = countFrame * 1;
+      next += 10;
+      countFrame++;
+    }
+  }
 }
 //animate(drawFrame)
