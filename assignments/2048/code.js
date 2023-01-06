@@ -210,7 +210,7 @@ const createShapes = () => {
 
   registerOnKeyDown((ArrowRight) => {
     done = true;
-     
+    
   })
 
 
@@ -221,7 +221,6 @@ const createShapes = () => {
 }
 
 
-createShapes()
 
 
 //animate(drawFrame)
