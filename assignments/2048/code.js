@@ -111,13 +111,14 @@ let CoordsArray = []
 
 const createShapes = () => {
   let done = false;
+  if(!done){
   registerOnclick((x, y) => {
     drawFilledCircle(x, y, 1.7, 'white')
     CoordsArray.push({ x, y })
     return
   })
   
-  registerOnKeyDown((ArrowUp) => {
+  registerOnKeyDown((Enter) => {
     done = true;
     return
   })
@@ -129,9 +130,10 @@ const createShapes = () => {
     CoordsArray = []
     return
   })
-  if(done){
+  }
+  else{
     console.log("done")
-    return;
+    return
   }
 }
 
