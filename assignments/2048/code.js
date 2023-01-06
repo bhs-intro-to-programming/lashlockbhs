@@ -133,7 +133,7 @@ const createShapes = () => {
   }
 }
 
-//createShapes()
+createShapes()
 
 class Shape {
   constructor(mass, actingForces, coordArray) {
