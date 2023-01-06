@@ -112,7 +112,7 @@ let CoordsArray = []
 const createShapes = () => {
   let done = false;
 
-  registerOnKeyDown((Enter) => {
+  registerOnKeyDown((ArrowRight) => {
     done = true;
      
   })
