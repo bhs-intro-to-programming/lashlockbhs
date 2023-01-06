@@ -114,11 +114,12 @@ const createShapes = () => {
   registerOnclick((x, y) => {
     drawFilledCircle(x, y, 1.7, 'white')
     CoordsArray.push({ x, y })
-
+    return
   })
   
   registerOnKeyDown((ArrowUp) => {
     done = true;
+    return
   })
   
   registerOnKeyDown((Space) => {
@@ -126,6 +127,7 @@ const createShapes = () => {
     ObjArray[ObjArray.length - 1].drawShape()
     drawFilledCircle(ObjArray[ObjArray.length - 1].centerX, ObjArray[ObjArray.length - 1].centerY, 2.5, "red")
     CoordsArray = []
+    return
   })
   if(done){
     console.log("done")
