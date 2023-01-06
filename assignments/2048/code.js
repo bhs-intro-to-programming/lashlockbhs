@@ -110,6 +110,7 @@ let CoordsArray = []
 //key press detection
 
 const createShapes = () => {
+  let done = false;
   registerOnclick((x, y) => {
     drawFilledCircle(x, y, 1.7, 'white')
     CoordsArray.push({ x, y })
@@ -117,7 +118,7 @@ const createShapes = () => {
   })
   
   registerOnKeyDown((ArrowUp) => {
-    
+    done = true;
   })
   
   registerOnKeyDown((Space) => {
@@ -126,7 +127,9 @@ const createShapes = () => {
     drawFilledCircle(ObjArray[ObjArray.length - 1].centerX, ObjArray[ObjArray.length - 1].centerY, 2.5, "red")
     CoordsArray = []
   })
-  
+  if(done){
+    return;
+  }
 }
 
 class Shape {
