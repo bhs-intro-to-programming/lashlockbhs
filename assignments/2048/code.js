@@ -115,15 +115,16 @@ const createShapes = () => {
     CoordsArray.push({ x, y })
 
   })
+  
+  registerOnKeyDown((ArrowUp) => {
+    
+  })
+  
   registerOnKeyDown((Space) => {
     ObjArray.push(new Shape(10, [vector(0, 0)], CoordsArray))
     ObjArray[ObjArray.length - 1].drawShape()
     drawFilledCircle(ObjArray[ObjArray.length - 1].centerX, ObjArray[ObjArray.length - 1].centerY, 2.5, "red")
     CoordsArray = []
-  })
-  
-  registerOnKeyDown((ArrowUp) => {
-    
   })
   
 }
