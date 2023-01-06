@@ -215,8 +215,8 @@ const createShapes = () => {
 
 
   if (done) {
-    console.log("done")
-    return
+    
+    return "done"
   }
 }
 
