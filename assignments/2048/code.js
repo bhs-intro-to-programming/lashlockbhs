@@ -107,31 +107,6 @@ const ObjArray = []
 let CoordsArray = []
 
 
-//key press detection
-
-  registerOnclick((x, y) => {
-   
-      drawFilledCircle(x, y, 1.7, 'white')
-      CoordsArray.push({ x, y })
-    
-  })
-
-
-  registerOnKeyDown((ArrowLeft) => {
-      ObjArray.push(new Shape(10, [vector(0, 0)], CoordsArray))
-      ObjArray[ObjArray.length - 1].drawShape()
-      drawFilledCircle(ObjArray[ObjArray.length - 1].centerX, ObjArray[ObjArray.length - 1].centerY, 2.5, "red")
-      CoordsArray = []
-    
-
-  })
-
-
-
-
-
-
-createShapes()
 
 console.log(ObjArray)
 class Shape {
@@ -210,4 +185,43 @@ const drawFrame = (time) => {
     }
   }
 }
+
+
+const createShapes = () => {
+  let done = false;
+  registerOnclick((x, y) => {
+    if (!done) {
+      drawFilledCircle(x, y, 1.7, 'white')
+      CoordsArray.push({ x, y })
+    }
+  })
+
+
+  registerOnKeyDown((ArrowLeft) => {
+    if (!done) {
+      ObjArray.push(new Shape(10, [vector(0, 0)], CoordsArray))
+      ObjArray[ObjArray.length - 1].drawShape()
+      drawFilledCircle(ObjArray[ObjArray.length - 1].centerX, ObjArray[ObjArray.length - 1].centerY, 2.5, "red")
+      CoordsArray = []
+    }
+
+  })
+
+
+  registerOnKeyDown((ArrowRight) => {
+    done = true;
+     
+  })
+
+
+  if (done) {
+    console.log("done")
+    return
+  }
+}
+
+
+createShapes()
+
+
 //animate(drawFrame)
