@@ -114,7 +114,7 @@ const createShapes = () => {
 
   registerOnKeyDown((Enter) => {
     done = true;
-    return
+     
   })
 
   registerOnclick((x, y) => {
