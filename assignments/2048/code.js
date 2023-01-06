@@ -128,6 +128,7 @@ const createShapes = () => {
     CoordsArray = []
   })
   if(done){
+    console.log("done")
     return;
   }
 }
