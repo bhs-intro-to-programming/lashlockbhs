@@ -125,7 +125,7 @@ const createShapes = () => {
   })
 
 
-  registerOnKeyDown((Space) => {
+  registerOnKeyDown((ArrowLeft) => {
     if (!done) {
       ObjArray.push(new Shape(10, [vector(0, 0)], CoordsArray))
       ObjArray[ObjArray.length - 1].drawShape()
