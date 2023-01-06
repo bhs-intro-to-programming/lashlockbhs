@@ -136,7 +136,7 @@ const createShapes = () => {
 }
 
 createShapes()
-
+console.log(ObjArray)
 class Shape {
   constructor(mass, actingForces, coordArray) {
     this.startingX = coordArray[0].x //for draw
