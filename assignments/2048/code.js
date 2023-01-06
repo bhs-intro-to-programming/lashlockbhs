@@ -112,17 +112,17 @@ let CoordsArray = []
 const createShapes = () => {
   let done = false;
   if(!done){
-  registerOnclick((x, y) => {
-    drawFilledCircle(x, y, 1.7, 'white')
-    CoordsArray.push({ x, y })
-    return
-  })
-  
+    
   registerOnKeyDown((Enter) => {
     done = true;
     return
   })
   
+  registerOnclick((x, y) => {
+    drawFilledCircle(x, y, 1.7, 'white')
+    CoordsArray.push({ x, y })
+    return
+  })
   registerOnKeyDown((Space) => {
     ObjArray.push(new Shape(10, [vector(0, 0)], CoordsArray))
     ObjArray[ObjArray.length - 1].drawShape()
