@@ -124,8 +124,8 @@ const createShapes = () => {
 
 class Shape {
   constructor(mass, actingForces, coordArray) {
-    this.startingX = coordArray[0].x
-    this.startingY = coordArray[0].y
+    this.startingX = coordArray[0].x //for draw
+    this.startingY = coordArray[0].y //for draw
     this.sides = createSides(coordArray)
     this.vertices = coordArray
     this.mass = mass
