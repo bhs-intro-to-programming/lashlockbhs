@@ -112,26 +112,28 @@ let CoordsArray = []
 const createShapes = () => {
   let done = false;
   if (!done) {
-
     registerOnKeyDown((Enter) => {
       done = true;
       return
     })
-
+  }
+  else if (!done) {
     registerOnclick((x, y) => {
       //drawFilledCircle(x, y, 1.7, 'white')
       //CoordsArray.push({ x, y })
-      
+
     })
+  }
+  else if (!done) {
     registerOnKeyDown((Space) => {
       //ObjArray.push(new Shape(10, [vector(0, 0)], CoordsArray))
       //ObjArray[ObjArray.length - 1].drawShape()
       //drawFilledCircle(ObjArray[ObjArray.length - 1].centerX, ObjArray[ObjArray.length - 1].centerY, 2.5, "red")
       //CoordsArray = []
-      
-    })
 
+    })
   }
+
   else {
     console.log("done")
     return
