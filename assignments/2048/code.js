@@ -48,6 +48,7 @@ const getBoundCenter = (arr) => {
   }
   const returner = findCentroid(arr)
   return returner
+
   /* let xMinMax = {min: arr[0].x, max: arr[0].x}
    let yMinMax =  {min: arr[0].y, max: arr[0].y}
    for (const e of arr){
@@ -109,37 +110,20 @@ let CoordsArray = []
 
 //key press detection
 
-const createShapes = () => {
-  let done = false;
-
-  registerOnKeyDown((Enter) => {
-    done = true;
-     
-  })
-
-  registerOnclick((x, y) => {
-    if (!done) {
-      drawFilledCircle(x, y, 1.7, 'white')
-      CoordsArray.push({ x, y })
-    }
-  })
+registerOnclick((x, y) => {
+  drawFilledCircle(x, y, 1.7, 'white')
+  CoordsArray.push({ x, y })
+})
 
 
-  registerOnKeyDown((Space) => {
-    if (!done) {
-      ObjArray.push(new Shape(10, [vector(0, 0)], CoordsArray))
-      ObjArray[ObjArray.length - 1].drawShape()
-      drawFilledCircle(ObjArray[ObjArray.length - 1].centerX, ObjArray[ObjArray.length - 1].centerY, 2.5, "red")
-      CoordsArray = []
-    }
+registerOnKeyDown((Space) => {
+  ObjArray.push(new Shape(10, [vector(0, 0)], CoordsArray))
+  ObjArray[ObjArray.length - 1].drawShape()
+  drawFilledCircle(ObjArray[ObjArray.length - 1].centerX, ObjArray[ObjArray.length - 1].centerY, 2.5, "red")
+  CoordsArray = []
 
-  })
 
-  if (done) {
-    console.log("done")
-    return
-  }
-}
+})
 
 
 createShapes()
