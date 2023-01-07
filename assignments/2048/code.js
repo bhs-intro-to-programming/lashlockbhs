@@ -188,7 +188,7 @@ const drawFrame = (time) => {
     }
   }
 }
-
+animate(drawFrame)
 
 
 registerOnclick((x, y) => {
