@@ -205,6 +205,4 @@ registerOnKeyDown((Space) => {
 })
 
 
-createShapes()
-
 //animate(drawFrame)
