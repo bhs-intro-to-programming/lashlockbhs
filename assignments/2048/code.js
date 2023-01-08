@@ -160,24 +160,6 @@ const createSides = (array) => {
   return returnArray
 }
 
-// draw on canvas and make changes to shapes
-
-const drawFrame = (time) => {
-  if (time > next) {
-
-    clear();
-    for (const element of ObjArray) {
-      addGravity(element, ObjArray)
-      addNumVectors(element.actingForce)
-      const objectBound = element.getBoundOfObject();
-
-      element.drawShape();
-      element.rotation = countFrame * 1;
-      next += 10;
-      countFrame++;
-    }
-  }
-}
 
 const ObjArray = []
 let vertices = []
