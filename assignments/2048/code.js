@@ -101,18 +101,15 @@ const addNumVectors = (a, mode) => {
   }
 }
 
-// shape/object manipulation
-const ObjArray = []
-let CoordsArray = []
 class Shape {
-  constructor(mass, actingForces, coordArray) {
-    this.startingX = coordArray[0].x //for draw
-    this.startingY = coordArray[0].y //for draw
-    this.sides = createSides(coordArray)
-    this.vertices = coordArray
+  constructor(mass, actingForces, vertices) {
+    this.startingX = vertices[0].x //for draw
+    this.startingY = vertices[0].y //for draw
+    this.sides = createSides(vertices)
+    this.vertices = vertices
     this.mass = mass
-    this.centerX = getBoundCenter(coordArray).x
-    this.centerY = getBoundCenter(coordArray).y
+    this.centerX = getBoundCenter(vertices).x
+    this.centerY = getBoundCenter(vertices).y
     this.rotation = 0
     this.actingForce = [addNumVectors(actingForces)]
   }
@@ -164,6 +161,7 @@ const createSides = (array) => {
 }
 
 // draw on canvas and make changes to shapes
+
 const drawFrame = (time) => {
   if (time > next) {
 
@@ -181,20 +179,38 @@ const drawFrame = (time) => {
   }
 }
 
-
+const ObjArray = []
+let vertices = []
 
 registerOnclick((x, y) => {
   drawFilledCircle(x, y, 1.7, 'white')
-  CoordsArray.push({ x, y })
+  vertices.push({ x, y })
 })
 
 
 registerOnKeyDown((Space) => {
-  ObjArray.push(new Shape(10, [vector(0, 0)], CoordsArray))
+  ObjArray.push(new Shape(10, [vector(0, 0)], vertices))
   ObjArray[ObjArray.length - 1].drawShape()
   drawFilledCircle(ObjArray[ObjArray.length - 1].centerX, ObjArray[ObjArray.length - 1].centerY, 2.5, "red")
-  CoordsArray = []
+  vertices = []
 })
 
 
 //animate(drawFrame)
+
+const drawFrame = (time) => {
+  if (time > next) {
+
+    clear();
+    for (const element of ObjArray) {
+      addGravity(element, ObjArray)
+      addNumVectors(element.actingForce)
+      const objectBound = element.getBoundOfObject();
+
+      element.drawShape();
+      element.rotation = countFrame * 1;
+      next += 10;
+      countFrame++;
+    }
+  }
+}
