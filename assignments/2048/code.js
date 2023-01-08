@@ -177,7 +177,7 @@ registerOnKeyDown((Space) => {
   vertices = []
 })
 
-
+console.log("3")
 //animate(drawFrame)
 
 const drawFrame = (time) => {
