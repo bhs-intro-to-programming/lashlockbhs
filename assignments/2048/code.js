@@ -1,14 +1,12 @@
 
 //rotational acceleration???
-const detectSelfIntersection = (shape) => {
-  shape.getBoundOfObject
-}
+const detectSelfIntersection = (shape) => shape.getBoundOfObject
+
 
 drawFilledRect(0, 0, width, height, 'black')
 
 const collisions = (shapes) => {
-  const collisionPoints = []
-
+  const collisionPoints = [
   for (let shapeNum = 0; shapeNum < shapes.length; shapeNum++) {
     for (let shapeNumCheck = shapeNum; shapeNumCheck < shapes.length; shapeNumCheck++) {
       if (shapeNum != shapeNumCheck) {
@@ -60,7 +58,7 @@ const getBoundCenter = (arr) => {
 
   //return {x: (xMinMax.min + xMinMax.max)/2 , y: (yMinMax.min + yMinMax.max)/2 }
 }
-
+//from web
 const rotate = (cx, cy, x, y, angle) => {
   let radians = (Math.PI / 180) * angle,
     cos = Math.cos(radians),
@@ -106,12 +104,6 @@ const addNumVectors = (a, mode) => {
 // shape/object manipulation
 const ObjArray = []
 let CoordsArray = []
-
-
-//key press detection
-
-
-console.log(ObjArray)
 class Shape {
   constructor(mass, actingForces, coordArray) {
     this.startingX = coordArray[0].x //for draw
@@ -202,8 +194,6 @@ registerOnKeyDown((Space) => {
   ObjArray[ObjArray.length - 1].drawShape()
   drawFilledCircle(ObjArray[ObjArray.length - 1].centerX, ObjArray[ObjArray.length - 1].centerY, 2.5, "red")
   CoordsArray = []
-
-
 })
 
 
