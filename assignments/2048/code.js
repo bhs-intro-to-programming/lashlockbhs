@@ -6,7 +6,7 @@ const detectSelfIntersection = (shape) => shape.getBoundOfObject
 drawFilledRect(0, 0, width, height, 'black')
 
 const collisions = (shapes) => {
-  const collisionPoints = [
+  const collisionPoints = []
   for (let shapeNum = 0; shapeNum < shapes.length; shapeNum++) {
     for (let shapeNumCheck = shapeNum; shapeNumCheck < shapes.length; shapeNumCheck++) {
       if (shapeNum != shapeNumCheck) {
