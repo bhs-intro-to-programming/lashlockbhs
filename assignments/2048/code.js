@@ -196,3 +196,5 @@ const drawFrame = (time) => {
     }
   }
 }
+
+animate(drawFrame)
