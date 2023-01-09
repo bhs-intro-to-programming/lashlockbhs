@@ -202,5 +202,6 @@ animate(drawFrame)
 
 const distance = (p1, p2) => Math.hypot(p1.x -p2.x, p1.y - p2.y)//math func
 
-const closePoints = (ar1, ar2) => (ar1.filter(e => ar2.find(e2 => distance(e, e2)<=1) != undefined ? true : false)
+const closePoints = (ar1, ar2) => ar1.filter(e => ar2.find(e2 => distance(e, e2)<=1) != undefined ? true : false)
+
 closePoints([{"x" : 11, "y" : 9} , {"x" : 10, "y" : 9}], [{"x" : 50, "y" : 9}, {"x" : 10, "y" : 9}])
