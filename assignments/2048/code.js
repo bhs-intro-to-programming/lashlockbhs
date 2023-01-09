@@ -163,7 +163,7 @@ const createSides = (array) => {
 
 const ObjArray = []
 let vertices = []
-
+/*
 registerOnclick((x, y) => {
   drawFilledCircle(x, y, 1.7, 'white')
   vertices.push({ x, y })
@@ -198,3 +198,6 @@ const drawFrame = (time) => {
 }
 
 animate(drawFrame)
+*/
+const commonElements = (ar1, ar2) => ar1.filter(e => ar2.find(e2 => e2 == e) != undefined ? true : false)
+commonElements([1, 2, 3], [3, 4, 5])
