@@ -199,5 +199,5 @@ const drawFrame = (time) => {
 
 animate(drawFrame)
 */
-const commonElements = (ar1, ar2) => ar1.filter(e => ar2.find(e2 => e2 == e) != undefined ? true : false)
-console.log(commonElements([1, 5, 4], [4, 4, 5]))
+const closePoints = (ar1, ar2) => ar1.filter(e => ar2.find(e2 => distance(e, e2)<=1) != undefined ? true : false)
+closePoints[{"x" : 10, "y" : 9}, {"x" : 10, "y" : 9}, {"x" : 10, "y" : 9}]
