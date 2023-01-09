@@ -200,4 +200,4 @@ const drawFrame = (time) => {
 animate(drawFrame)
 */
 const closePoints = (ar1, ar2) => ar1.filter(e => ar2.find(e2 => distance(e, e2)<=1) != undefined ? true : false)
-closePoints[{"x" : 10, "y" : 9}, {"x" : 10, "y" : 9}, {"x" : 10, "y" : 9}]
+console.log(closePoints[{"x" : 10, "y" : 9}, {"x" : 10, "y" : 9}, {"x" : 10, "y" : 9}])
