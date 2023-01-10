@@ -231,10 +231,10 @@ for (const vert of vertices) {
 vertices = vertices.map((e, i) => e = { x: centerX + vertDifs[i].xDif, y: centerY + vertDifs[i].yDif })
 console.log(vertices[0].x)
 drawPoints(vertices, 'black')
-drawPoints([{x : centerX, y : centerY}], "pink")
+drawPoints([{x : centerX, y : centerY}], "blue")
 
 vertices = vertices.map((e, i) => e = { x: centerX + vertDifs[i].xDif, y: centerY + vertDifs[i].yDif })
 console.log(vertices[0].x)
-drawPoints([{x : centerX, y : centerY}], "pink")
+drawPoints([{x : centerX, y : centerY}], "blue")
 drawPoints(vertices, 'red')
 
