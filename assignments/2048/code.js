@@ -203,6 +203,14 @@ animate(drawFrame)
 const distance = (p1, p2) => Math.hypot(p1.x -p2.x, p1.y - p2.y)//math func
 
 const closePoints = (ar1, ar2) => ar1.filter(e => ar2.find(e2 => distance(e, e2)<=1) != undefined ? true : false)
-
-
+const vertC = (n) =>{
+  const ar = []
+  for(let i =0; i<n; i++){
+    ar.push({x : Math.round(Math.random()*10), y : Math.round(Math.random()*10)})
+  }
+  return ar
+}
+vertices = vertC(3)
+console.log(vertices)
+vertices.forEach((e, i) => e = { x: centerX + vertDifs[i].xDif, y: centerY + vertDifs[i].yDif})
 
