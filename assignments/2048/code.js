@@ -1,119 +1,42 @@
-//math
-//vector manipulation, stored in radians
-const vector = (degrees, magnitude) => {
-  return { angle: degrees * Math.PI / 180, magnitude };
-};
 
-const add2Vectors = (v1, v2) => {
-  const x1 = Math.cos(v1.angle) * v1.magnitude;
-  const x2 = Math.cos(v2.angle) * v2.magnitude;
-  const y1 = Math.sin(v1.angle) * v1.magnitude;
-  const y2 = Math.sin(v2.angle) * v2.magnitude;
-  const angle = Math.atan2(y1 + y2, x1 + x2);
-  const magnitude = Math.hypot((x1 - x2), (y1 - y2));
-  return { angle, magnitude };
-};
-
-const vectorMultiply = (vector, n) => {
-   if (n >= 0) {
-    return { angle: vector.angle, magnitude: vector.magnitude * n };
-   } else {
-    return { angle: (vector.angle + Math.PI) % (2 * Math.PI), magnitude: vector.magnitude * -n };
-  };
-};
-
-const addNumVectors = (vectors) => {
-  return vectors.reduce((acc, x) => add2Vectors(acc, x), vector(0, 0));
-};
-
-//general math functions
-/* this part is not done, still can merge though
-const overRange = (start, end, funct, startValue) => {
-  for (let i = start; i <= end; i++) {
-    startValue = 0;
-  };
-};
-*/
-
-const sigma = (start, end, funct) => {
-  let sum = 0;
-  for (let i = start; i <= end; i++) {
-    sum += funct(i);
-  };
-  return sum;
-};
-
-const pi = (start, end, funct) => {
-  let product = 1;
-  for (let i = start; i <= end; i++) {
-    product *= funct(i);
-  };
-  return product;
-};
-
-const degToRad = (radAngle) => {
-  return radAngle * Math.PI / 180;
-};
-
-const radToDeg = (degAngle) => {
-  return degAngle * 180 / Math.PI;
-};
-
-const mean = (array) => {
-  return array.reduce((a,e) => a+e, 0) / array.length;
-};
-
-const geoMean = (array) => {
-  return pi(0, array.length - 1, i => array[i]) ** (1 / (array.length - 1));
-};
-
-//these next two take 2 objects with x and y
-const twoPointAngle = (p1, p2) => {
-  return Math.atan2(p2.y - p1.y, p2.x - p1.x);
-};
-
-const distance = (p1, p2) => {
-  return Math.hypot(Math.abs(p1.x - p2.x), Math.abs(p1.y - p2.y));
-};
-
-//time derivative(s)
-const getAcceleration = (force, mass, appliedTime) => {
-  return force / mass * appliedTime;
-};
-
-const getVelocity = (force, mass, appliedTime, fps) => getAcceleration(force, mass, appliedTime) * (1/fps);
+//rotational acceleration???
+const detectSelfIntersection = (shape) => shape.getBoundOfObject
 
 
-//Verlet Integration, don't worry about this for now (I gotta take Calc BC now xD)
-/*
-last_acceleration = acceleration
-position += velocity * time_step + ( 0.5 * last_acceleration * time_step^2 )
-new_acceleration = force / mass 
-avg_acceleration = ( last_acceleration + new_acceleration ) / 2
-velocity += avg_acceleration * time_step
-*/
-//returns points that are 1 or less pixels away from eachother
-const closePoints = (ar1, ar2) => ar1.filter(e => ar2.find(e2 => distance(e, e2) <= 1) != undefined ? true : false)
+drawFilledRect(0, 0, width, height, 'black')
 
-//returns an array of objects that have a x, y point of collison and the shapes involved
 const collisions = (shapes) => {
-  const collisions = []
-  for (let s1 = 0; s1 < shapes.length; s1++) {
-    for (let s2 = s1 + 1; s2 < shapes.length; s2++) {
+  const collisionPoints = []
+  for (let shapeNum = 0; shapeNum < shapes.length; shapeNum++) {
+    for (let shapeNumCheck = shapeNum; shapeNumCheck < shapes.length; shapeNumCheck++) {
+      if (shapeNum != shapeNumCheck) {
+        const currShapeBounds = shapes[shapeNum].getBoundOfObject()
+        const currShapeBoundsCheck = shapes[shapeNumCheck].getBoundOfObject()
 
-      const s1Bounds = shapes[s1].getBoundOfObject()
-      const s2Bounds = shapes[s2].getBoundOfObject()
+        for (let currShapeBoundsIndex = 0; currShapeBoundsIndex < currShapeBounds.length; currShapeBoundsIndex++) {
+          for (let currShapeBoundsCheckIndex = 0; currShapeBoundsCheckIndex < currShapeBoundsCheck.length; currShapeBoundsCheckIndex++) {
 
-      collisions.push({ "points": closePoints(s1Bounds, s2Bounds), "s1": shapes[s1], "s2": shapes[s2] })
+            if (Math.sqrt((currShapeBounds[currShapeBoundsIndex].x - currShapeBoundsCheck[currShapeBoundsCheckIndex].x) ** 2 + (currShapeBounds[currShapeBoundsIndex].y - currShapeBoundsCheck[currShapeBoundsCheckIndex].y) ** 2) <= 1) {
+              //object add
+              collisionPoints.push({ "x": currShapeBounds[currShapeBoundsIndex].x, "y": currShapeBounds[currShapeBoundsIndex].y, "shape1": shapes[shapeNum], "shape2": shapes[shapeNumCheck] })
+            }
+          }
+        }
+      }
     }
   }
-  return collisions;
+  //returns an array of objects that have a x, y point of collison and the shapes involoved
+  return collisionPoints;
 }
 
-
-
-
 const getBoundCenter = (arr) => {
+  const sigma = (start, end, funct) => {
+    let sum = 0
+    for (let n = start; n <= end; n++) {
+      sum += funct(n)
+    }
+    return sum
+  }
   const findCentroid = (points) => {
     const pts = points.concat(points[0])
     const area = (sigma(0, pts.length - 2, i => (pts[i].x * pts[i + 1].y) - (pts[i + 1].x * pts[i].y))) / 2
@@ -123,6 +46,17 @@ const getBoundCenter = (arr) => {
   }
   const returner = findCentroid(arr)
   return returner
+
+  /* let xMinMax = {min: arr[0].x, max: arr[0].x}
+   let yMinMax =  {min: arr[0].y, max: arr[0].y}
+   for (const e of arr){
+     if (e.x < xMinMax.min) xMinMax.min = e.x
+     if (e.x > xMinMax.max) xMinMax.max = e.x
+     if (e.y < yMinMax.min) yMinMax.min = e.y
+     if (e.y > yMinMax.max) yMinMax.max = e.y
+   }*/
+
+  //return {x: (xMinMax.min + xMinMax.max)/2 , y: (yMinMax.min + yMinMax.max)/2 }
 }
 //from web
 const rotate = (cx, cy, x, y, angle) => {
@@ -132,6 +66,39 @@ const rotate = (cx, cy, x, y, angle) => {
     nx = (cos * (x - cx)) + (sin * (y - cy)) + cx,
     ny = (cos * (y - cy)) - (sin * (x - cx)) + cy;
   return [nx, ny];
+}
+
+//vector manipulation
+const vector = (angle, magnitude) => {
+  return ({ angle: angle * Math.PI / 180, magnitude })
+}
+
+const add2Vectors = (a) => {
+  const x1 = Math.cos(a[0].angle) * a[0].magnitude
+  const x2 = Math.cos(a[1].angle) * a[1].magnitude
+  const y1 = Math.sin(a[0].angle) * a[0].magnitude
+  const y2 = Math.sin(a[1].angle) * a[1].magnitude
+  const angle = Math.atan2(y1 + y2, x1 + x2)
+  const mag = Math.sqrt((x1 + x2) ** 2 + (y1 + y2) ** 2)
+  return ({ angle, magnitude: mag })
+}
+
+const vectorMultiply = (o, n) => {
+  if (n >= 0) {
+    return ({ angle: o.angle, magnitude: o.magnitude * n })
+  } else {
+    return ({ angle: o.angle + Math.PI, magnitude: o.magnitude * -n })
+  }
+}
+
+const addNumVectors = (a, mode) => {
+  if (mode === 'degrees') {
+    const r = a.reduce((acc, x) => add2Vectors([acc, x]), vector(0, 0))
+    r.angle = r.angle * 180 / Math.PI
+    return r
+  } else {
+    return a.reduce((acc, x) => add2Vectors([acc, x]), vector(0, 0))
+  }
 }
 
 class Shape {
@@ -151,9 +118,9 @@ class Shape {
     let currY = this.startingY;
 
     for (let i = 0; i < this.sides.length; i++) {
-      let startPoint = rotate(this.centerX, this.centerY, currX, currY, this.rotation)
-      let endPoint = rotate(this.centerX, this.centerY, currX + this.sides[i].xAdd, currY + this.sides[i].yAdd, this.rotation)
-      drawLine(startPoint[0], startPoint[1], endPoint[0], endPoint[1], 'black');
+      let coordSetStart = rotate(this.centerX, this.centerY, currX, currY, this.rotation)
+      let coordSetEnd = rotate(this.centerX, this.centerY, currX + this.sides[i].xAdd, currY + this.sides[i].yAdd, this.rotation)
+      drawLine(coordSetStart[0], coordSetStart[1], coordSetEnd[0], coordSetEnd[1], 'white', ctx);
       currX = currX + this.sides[i].xAdd;
       currY = currY + this.sides[i].yAdd;
     }
@@ -163,17 +130,17 @@ class Shape {
     let currY = this.startingX;
     let array = []
     for (let i = 0; i < this.sides.length; i++) {
-      let startPoint = rotate(this.centerX, this.centerY, currX, currY, this.rotation)
-      let endPoint = rotate(this.centerX, this.centerY, currX + this.sides[i].xAdd, currY + this.sides[i].yAdd, this.rotation);
-      let numOfSidePixels = Math.round(Math.sqrt(((startPoint[0] - endPoint[0]) ** 2) + ((startPoint[1] - endPoint[1]) ** 2)));
+      let coordSetStart = rotate(this.centerX, this.centerY, currX, currY, this.rotation)
+      let coordSetEnd = rotate(this.centerX, this.centerY, currX + this.sides[i].xAdd, currY + this.sides[i].yAdd, this.rotation);
+      let numOfSidePixels = Math.round(Math.sqrt(((coordSetStart[0] - coordSetEnd[0]) ** 2) + ((coordSetStart[1] - coordSetEnd[1]) ** 2)));
 
-      drawLine(startPoint[0], startPoint[1], endPoint[0], endPoint[1])
+      drawLine(coordSetStart[0], coordSetStart[1], coordSetEnd[0], coordSetEnd[1])
 
-      let xPerPix = (endPoint[0] - startPoint[0]) / numOfSidePixels
-      let yPerPix = (endPoint[1] - startPoint[1]) / numOfSidePixels
+      let xAddPerPix = (coordSetEnd[0] - coordSetStart[0]) / numOfSidePixels
+      let yAddPerPix = (coordSetEnd[1] - coordSetStart[1]) / numOfSidePixels
 
       for (let n = 0; n < numOfSidePixels; n++) {
-        array.push({ "x": startPoint[0] + n * xPerPix, "y": startPoint[1] + n * yPerPix })
+        array.push({ "x": coordSetStart[0] + n * xAddPerPix, "y": coordSetStart[1] + n * yAddPerPix })
       }
 
       currX = currX + this.sides[i].xAdd;
@@ -182,6 +149,7 @@ class Shape {
     return array
   }
 }
+
 
 const createSides = (array) => {
   const returnArray = []
@@ -193,41 +161,48 @@ const createSides = (array) => {
 }
 
 
-const objArray = []
+const ObjArray = []
 let vertices = []
-let animateStart = false;
-
+/*
 registerOnclick((x, y) => {
-  if (!animateStart) {
-    drawFilledCircle(x, y, 1.7, 'black')
-    vertices.push({ x, y })
-  }
+  drawFilledCircle(x, y, 1.7, 'white')
+  vertices.push({ x, y })
 })
 
-registerOnKeyDown(() => {
-  if (!animateStart) {
-    objArray.push(new Shape(10, [vector(0, 0)], vertices))
-    objArray[objArray.length - 1].drawShape()
-    drawFilledCircle(objArray[objArray.length - 1].centerX, objArray[objArray.length - 1].centerY, 2.5, "red")
-    vertices = []
-    animateStart = objArray.length >= 3 ? true : false
-  }
+
+registerOnKeyDown((Space) => {
+  ObjArray.push(new Shape(10, [vector(0, 0)], vertices))
+  ObjArray[ObjArray.length - 1].drawShape()
+  drawFilledCircle(ObjArray[ObjArray.length - 1].centerX, ObjArray[ObjArray.length - 1].centerY, 2.5, "red")
+  vertices = []
 })
 
-let next = 0;
-let countFrame = 0;
+console.log("3")
+//animate(drawFrame)
+
 const drawFrame = (time) => {
-  if ((time > next) && animateStart) {
-    clear();
-    for (const shape of objArray) {
-      drawFilledCircle(shape.centerX, shape.centerY, 2.5, "red")
-      shape.drawShape();
-      shape.rotation = countFrame;
+  if (time > next) {
 
-      next += 1;
+    clear();
+    for (const element of ObjArray) {
+      addGravity(element, ObjArray)
+      addNumVectors(element.actingForce)
+      const objectBound = element.getBoundOfObject();
+
+      element.drawShape();
+      element.rotation = countFrame * 1;
+      next += 10;
       countFrame++;
     }
   }
 }
 
 animate(drawFrame)
+*/
+
+const distance = (p1, p2) => Math.hypot(p1.x -p2.x, p1.y - p2.y)//math func
+
+const closePoints = (ar1, ar2) => ar1.filter(e => ar2.find(e2 => distance(e, e2)<=1) != undefined ? true : false)
+
+
+
