@@ -233,6 +233,10 @@ console.log(vertices[0].x)
 drawPoints(vertices, 'black')
 drawPoints([{x : centerX, y : centerY}], "blue")
 
+let centerX = 1
+let centerY = 1
+
+
 vertices = vertices.map((e, i) => e = { x: centerX + vertDifs[i].xDif, y: centerY + vertDifs[i].yDif })
 console.log(vertices[0].x)
 drawPoints([{x : centerX, y : centerY}], "blue")
