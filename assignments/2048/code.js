@@ -200,6 +200,11 @@ const drawFrame = (time) => {
 animate(drawFrame)
 */
 
+const drawPoints = (ar, color) =>{
+  for(const point of ar){
+    drawLine(point.x, point.y, point.x+1, point.y+1, color, 1)
+  }
+}
 const twoPointXYDif = (p1, p2) =>{ 
   return { xDif: (p1.x - p2.x), yDif: (p1.y - p2.y) }; 
 };
@@ -224,11 +229,13 @@ for (const vert of vertices) {
   vertDifs.push(twoPointXYDif(vert, { x: centerX, y: centerY }))
 }
 
-vertices.forEach((e, i) => e = { x: centerX + vertDifs[i].xDif, y: centerY + vertDifs[i].yDif })
+vertices = vertices.map((e, i) => e = { x: centerX + vertDifs[i].xDif, y: centerY + vertDifs[i].yDif })
 console.log(vertices[0].x)
-
-centerX = 1
-centerY = 1
+drawPoints(vertices, 'black')
+drawPoints([{x : centerX, y : centerY}])
 
 vertices = vertices.map((e, i) => e = { x: centerX + vertDifs[i].xDif, y: centerY + vertDifs[i].yDif })
 console.log(vertices[0].x)
+drawPoints([{x : centerX, y : centerY}])
+drawPoints(vertices, 'red')
+
