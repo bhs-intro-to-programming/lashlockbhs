@@ -217,7 +217,7 @@ const vertC = (n) => {
 
 let centerX = 10
 let centerY = 20
-let vertices = vertC(3)
+vertices = vertC(3)
 const vertDifs = []
 
 for (const vert of vertices) {
