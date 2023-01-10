@@ -3,7 +3,6 @@
 const detectSelfIntersection = (shape) => shape.getBoundOfObject
 
 
-drawFilledRect(0, 0, width, height, 'black')
 
 const collisions = (shapes) => {
   const collisionPoints = []
