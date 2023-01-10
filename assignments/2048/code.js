@@ -224,7 +224,6 @@ for (const vert of vertices) {
   vertDifs.push(twoPointXYDif(vert, { x: centerX, y: centerY }))
 }
 
-console.log(vertices[0].x)
 
 vertices.forEach((e, i) => e = { x: centerX + vertDifs[i].xDif, y: centerY + vertDifs[i].yDif })
-
+console.log(vertices)
