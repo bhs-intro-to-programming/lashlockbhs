@@ -214,7 +214,7 @@ const closePoints = (ar1, ar2) => ar1.filter(e => ar2.find(e2 => distance(e, e2)
 const vertC = (n) => {
   const ar = []
   for (let i = 0; i < n; i++) {
-    ar.push({ x: Math.round(Math.random() * 10), y: Math.round(Math.random() * 10) })
+    ar.push({ x: Math.round(Math.random() * 10)+100, y: Math.round(Math.random() * 10)+100})
   }
   return ar
 }
