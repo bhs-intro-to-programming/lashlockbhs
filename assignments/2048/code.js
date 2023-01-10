@@ -227,8 +227,8 @@ for (const vert of vertices) {
 vertices.forEach((e, i) => e = { x: centerX + vertDifs[i].xDif, y: centerY + vertDifs[i].yDif })
 console.log(vertices[0].x)
 
-const centerX = 43
-const centerY = 32
+centerX = 43
+centerY = 32
 
 vertices.forEach((e, i) => e = { x: centerX + vertDifs[i].xDif, y: centerY + vertDifs[i].yDif })
 console.log(vertices[0].x)
