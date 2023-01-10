@@ -215,8 +215,8 @@ const vertC = (n) => {
   return ar
 }
 
-const centerX = 10
-const centerY = 20
+let centerX = 10
+let centerY = 20
 vertices = vertC(3)
 const vertDifs = []
 
