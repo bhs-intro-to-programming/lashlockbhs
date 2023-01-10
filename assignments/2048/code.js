@@ -211,8 +211,8 @@ const vertC = (n) =>{
   return ar
 }
 vertices = vertC(3)
-centerX = 10
-centerY = 20
+const centerX = 10
+const centerY = 20
 console.log(vertices)
 
 vertices.forEach((e, i) => e = { x: centerX + vertDifs[i].xDif, y: centerY + vertDifs[i].yDif})
