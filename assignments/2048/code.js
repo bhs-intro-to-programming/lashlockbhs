@@ -230,5 +230,5 @@ console.log(vertices[0].x)
 centerX = 43
 centerY = 32
 
-vertices = vertices.map((e, i) => { x: centerX + vertDifs[i].xDif, y: centerY + vertDifs[i].yDif })
+vertices = vertices.map((e, i) => e = { x: centerX + vertDifs[i].xDif, y: centerY + vertDifs[i].yDif })
 console.log(vertices[0].x)
